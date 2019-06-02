@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Portal de reparaciones</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/2e92debb63.js"></script>
+<style>
+th{
+    text-align: center;
+}
+
+</style>
+</head>
+
+<body class="container">
+    <header class="">
+        <h1 class="">Panel de control de reparaciones</h1>
+        <nav class="d-flex justify-content-center row">
+            <div class="dropdown mr-3">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Consultas
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#" onclick="llamarTodas()">Todas las reparaciones</a>
+                    <a class="dropdown-item" href="#" onclick="porMatricula()">Por matricula</a>
+                    <a class="dropdown-item" href="#">Por fecha</a>
+                    <a class="dropdown-item" href="#">Por reparacion</a>
+                    <a class="dropdown-item" href="#">Por matricula y fecha</a>
+                    <a class="dropdown-item" href="#">Por matricula y reparacion</a>
+                    <a class="dropdown-item" href="#">Por fecha y reparacion</a>
+                </div>
+            </div>
+            <div class="ml-3">
+                <button class="btn btn-secondary " type="button" id="MenuButton">
+                    Reparaciones
+                </button>
+            </div>
+        </nav>
+    </header>
+    <main class="d-flex justify-content-around row">
+        <div id="addReparacion" class="col-12 mt-5">
+            <div class="row">
+                <table class="table table-dark form-group">
+                    <thead class="">
+                        <tr class="">
+                            <th class="">
+                                <p class="text-warning"></p>
+                            </th>
+                            <th class="">matricula </th>
+                            <th class="">fecha </i></th>
+                            <th class="">reparacion </th>
+                        </tr>
+                    </thead>
+                    <tbody class="" id="">
+                        <tr class="">
+                            <form action="" id="formularioNuevaReparacion">
+                                <td style="width:5px;" class="">
+                                    <button type="submit" class="btn btn-dark">
+                                        <i class="fas fa-upload text-warning"></i>
+                                    </button>
+                                </td>
+                                <td style="" class=""><input type="text" class="form-control" id="matricula"
+                                        name="matricula" required><i class="fas fa-search-plus text-warning" onclick="buscaPorMatricula()"></i>
+                                </td>
+                                <td style="width: 50px;" class=""><input type="date" class="form-control" id="fecha"
+                                        name="fecha" required><i class="fas fa-search-plus text-warning" onclick="buscaPorFecha()"></i></td>
+                                <td style="width:1000px;" class=""><input type="text" class="form-control" id="desrepara"
+                                        name="desrepara" required><i class="fas fa-search-plus text-warning" onclick="buscaPorReparacion()"></i>
+                                </td>
+                            </form>
+
+                        </tr>
+
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <div id="panelReparaciones" class=" col-10">
+            <div class="mt-5 row ">
+                <table class="table table-dark">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">matricula</th>
+                            <th scope="col">fecha</th>
+                            <th scope="col">reparacion</th>
+                        </tr>
+                    </thead>
+                    <tbody id="todas">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+
+/// vamos a hacer todas las busquedas en una sola funcion con unos if isset sobre datos.get('lo que sea') y ponemos un solo icono de busqueda
+
+
+    <script>
+      
+        let formularioNuevaReparacion = document.getElementById('formularioNuevaReparacion');
+        formularioNuevaReparacion.addEventListener('submit', function (e) {
+            e.preventDefault();
+            console.log('click');
+            let datos = new FormData(formularioNuevaReparacion);
+            console.log(datos.get('matricula'));
+            console.log(datos.get('fecha'));
+            fetch('http://localhost:8000/api/reparaciones', {
+                    method: 'POST',
+                    body: datos
+                })
+                .then(res => res.json())
+                .then(data => {
+                    llamarTodas();
+                });
+        });
+        function buscaPorMatricula(){
+            let datos = new FormData(formularioNuevaReparacion);
+            fetch('http://localhost:8000/api/reparaciones/'+datos.get('matricula'))
+                .then((response) => {
+                    return response.json();
+                })
+                .then((recurso) => {
+                    console.log(recurso);
+                    let contenido = document.getElementById('todas');
+                    contenido.innerHTML = "";
+                    recurso.forEach(reparacion => {
+                        contenido.innerHTML = contenido.innerHTML +
+                            '<tr id="todas"> <th scope="row">' + reparacion.id +
+                            '</th> <td id="matricula">' + reparacion
+                            .matricula + '</td><td id="fecha">' + reparacion.fecha +
+                            '</td><td id="reparacion">' + reparacion.desrepara + '</td></tr>';
+
+                    });
+
+                });
+
+
+        }
+        function buscaPorFecha(){
+            let datos = new FormData(formularioNuevaReparacion);
+            fetch('http://localhost:8000/api/reparaciones/fecha/'+datos.get('fecha'))
+                .then((response) => {
+                    return response.json();
+                })
+                .then((recurso) => {
+                    console.log(recurso);
+                    let contenido = document.getElementById('todas');
+                    contenido.innerHTML = "";
+                    recurso.forEach(reparacion => {
+                        contenido.innerHTML = contenido.innerHTML +
+                            '<tr id="todas"> <th scope="row">' + reparacion.id +
+                            '</th> <td id="matricula">' + reparacion
+                            .matricula + '</td><td id="fecha">' + reparacion.fecha +
+                            '</td><td id="reparacion">' + reparacion.desrepara + '</td></tr>';
+
+                    });
+
+                });
+
+
+        }
+        function buscaPorReparacion(){
+            let datos = new FormData(formularioNuevaReparacion);
+            fetch('http://localhost:8000/api/reparaciones/desrepara/'+datos.get('desrepara'))
+                .then((response) => {
+                    return response.json();
+                })
+                .then((recurso) => {
+                    console.log(recurso);
+                    let contenido = document.getElementById('todas');
+                    contenido.innerHTML = "";
+                    recurso.forEach(reparacion => {
+                        contenido.innerHTML = contenido.innerHTML +
+                            '<tr id="todas"> <th scope="row">' + reparacion.id +
+                            '</th> <td id="matricula">' + reparacion
+                            .matricula + '</td><td id="fecha">' + reparacion.fecha +
+                            '</td><td id="reparacion">' + reparacion.desrepara + '</td></tr>';
+
+                    });
+
+                });
+
+
+        }
+
+        function llamarTodas() {
+            fetch('http://localhost:8000/api/reparaciones')
+                .then((response) => {
+                    return response.json();
+                })
+                .then((recurso) => {
+                    console.log(recurso);
+                    let contenido = document.getElementById('todas');
+                    contenido.innerHTML = "";
+                    recurso.forEach(reparacion => {
+                        contenido.innerHTML = contenido.innerHTML +
+                            '<tr id="todas"> <th scope="row">' + reparacion.id +
+                            '</th> <td id="matricula">' + reparacion
+                            .matricula + '</td><td id="fecha">' + reparacion.fecha +
+                            '</td><td id="reparacion">' + reparacion.desrepara + '</td></tr>';
+
+                    });
+
+                });
+        };
+    </script>
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>
