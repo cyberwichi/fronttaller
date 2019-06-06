@@ -8,30 +8,53 @@
     <title>Portal de reparaciones</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://kit.fontawesome.com/2e92debb63.js"></script>
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.datatables.net/v/bs4-4.1.1/dt-1.10.18/b-1.5.6/b-flash-1.5.6/b-print-1.5.6/datatables.min.css" />
-    <link rel="stylesheet" type="text/css" href="DataTables/dataTables.bootstrap4.min.css" />
-
-    <style>
-        th,
-        td {
-            text-align: center;
-        }
-
-        i {
-            margin: 0 15px;
-        }
-
-        body {
-            background-color: #aaa;
-        }
-    </style>
+   	<link rel="stylesheet" href="css/estilos.css">
+    
 </head>
 
 <body class="container">
-    <form action="" id="formularioNuevaReparacion">
+    
     <header class="">
         <h1 class="">Panel de control de reparaciones</h1>
+        
+    </header>
+    
+    
+    <main class="d-flex justify-content-around row">
+       <form action="" id="formularioNuevaReparacion">
+        <div id="addReparacion" class="col-12 mt-5">
+            <div class="row">
+                <table id="" class="table table-dark form-group">
+                    <thead class="">
+                        <tr class="">
+                            
+                            <th class="">matricula </th>
+                            <th class="">fecha </th>
+                            <th class="">reparacion </th>
+                        </tr>
+                    </thead>
+                    <tbody class="" id="">
+                        <tr class="">
+                            
+                                
+                                <td class="" style="width: 150px;"><input type="text" class="form-control" id="matricula" name="matricula"
+                                        required>
+                                </td>
+                                <td style="width: 5px;" class=""><input type="date" class="form-control" id="fecha"
+                                        name="fecha" required></td>
+                                <td style="width:1000px;" class=""><input type="text" class="form-control"
+                                        id="desrepara" name="desrepara" required>
+                                </td>
+                            
+
+                        </tr>
+
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
         <nav class="d-flex justify-content-center row">
             <div class="m-3">
                 <button class="btn btn-secondary " type="button" id="MenuButton">
@@ -45,56 +68,19 @@
                 </button>
             </div>
             <div class="m-3">
-                <button class="btn btn-secondary " type="button" id="MenuButton">
+                <button class="btn btn-secondary " type="button" id="MenuButton3">
                     <i class="fas fa-snowplow" onclick="borraFormulario()"> Limpiar</i>
                 </button>
             </div>
         </nav>
-    </header>
-    <main class="d-flex justify-content-around row">
-        <div id="addReparacion" class="col-12 mt-5">
-            <div class="row">
-                <table id="" class="table table-dark form-group">
-                    <thead class="">
-                        <tr class="">
-                            <th class="">
-                                <p class="text-warning"></p>
-                            </th>
-                            <th class="">matricula </th>
-                            <th class="">fecha </i></th>
-                            <th class="">reparacion </th>
-                        </tr>
-                    </thead>
-                    <tbody class="" id="">
-                        <tr class="">
-                            
-                                <td style="width:5px;" class="">
-
-                                </td>
-                                <td class=""><input type="text" class="form-control" id="matricula" name="matricula"
-                                        required>
-                                </td>
-                                <td style="width: 50px;" class=""><input type="date" class="form-control" id="fecha"
-                                        name="fecha" required></td>
-                                <td style="width:1000px;" class=""><input type="text" class="form-control"
-                                        id="desrepara" name="desrepara" required>
-                                </td>
-                            </form>
-
-                        </tr>
-
-
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
-        <div id="panelReparaciones" class=" col-10">
+        </form>
+        <div id="panelReparaciones" class=" col">
             <div class="mt-5 row ">
-                <table id="tablaDisplay" class="table table-dark">
-                    <thead>
+               
+                <table id="tablaDisplay" class="table table-bordered ">
+                    <thead class="thead-dark">
                         <tr>
-                            <th scope="col">matricula</th>
+                            <th scope="col">MATRICULA</th>
                             <th scope="col">fecha</th>
                             <th scope="col">reparacion</th>
                             <th scope="col">Borrar/Editar</th>
@@ -103,7 +89,7 @@
                     <tbody id="todas">
 
                     </tbody>
-                    <ul class="pagination pagination-lg" id="myPager"></ul>
+                    
                 </table>
 
             </div>
@@ -121,9 +107,9 @@
                     </div>
                     <div class="modal-body">
                         <form id="formularioActualizarReparacion">
-                            <div class="form-group">
+                            <div class="form-group fuera">
                                 <label for="modalId" class="col-form-label">Id:</label>
-                                <input type="text" class="form-control" id="modalId" value="0" name="id">
+                                <input type="text"  readonly class="form-control" id="modalId" value="0" name="id">
                             </div>
                             <div class="form-group">
                                 <label for="modalMatricula" class="col-form-label">Matricula:</label>
@@ -150,11 +136,13 @@
         </div>
 
     </main>
+    
+    
+    
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="DataTables/datatables.min.js"></script>
-    <script type="text/javascript" src="DataTables/dataTables.bootstrap4.min.js"></script>
+    
     <script src="lib/app.js"></script>
 
     

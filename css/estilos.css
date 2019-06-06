@@ -1,0 +1,33 @@
+th,
+td {
+	text-align: center;
+}
+
+h1 {
+	text-align: center;
+	font-weight: 700;
+	line-height: 50px;
+	margin: 20px 0 0 0;
+
+}
+
+#tablaDisplay td {
+	background-color: #aaa;
+}
+
+#tablaDisplay {
+	box-shadow: 10px 10px 10px #fff;
+}
+
+i {
+	margin: 0 15px;
+}
+
+body {
+	background-color: #888;
+}
+
+#nav a {
+	text-decoration: none;
+	color: #fff;
+}
